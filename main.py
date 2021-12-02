@@ -1,6 +1,16 @@
-import pandas
+import pandas, sys,os
 
-madataframe = pandas.read_csv("export-operations.csv", encoding="cp1252", delimiter=";")
+if len(sys.argv) == 1:
+    print("Usage: ", sys.argv[0], "INPUT_CSV_FILE")
+    print("Aucun fichier spécifié en argument")
+    exit(1)
+
+if not os.path.isfile(sys.argv[1]):
+    print("Le fichier", sys.argv[1], "n'existe pas")
+    exit(1)
+
+input_file = sys.argv[1]
+madataframe = pandas.read_csv(input_file, encoding="cp1252", delimiter=";")
 madataframe["payment"] = ""
 madataframe.loc[madataframe["label"].str.contains("VIR"), ["payment"]] = 4
 madataframe.loc[madataframe["label"].str.contains("CB"), ["payment"]] = 5
@@ -16,7 +26,8 @@ madataframe = madataframe.rename(columns={"dateOp": "date"})
 madataframe["memo"] = ""
 madataframe["tags"] = ""
 madataframe["payee"] = ""
-
 madataframe = madataframe[["date", "payment", "info", "payee", "memo", "amount", "category", "tags"]]
-
-madataframe.to_csv("output.csv", index=False, quoting=None, sep=";")
+output_file = input_file + "_converted.csv"
+madataframe.to_csv(output_file, index=False, quoting=None, sep=";")
+print("Fichier converti avec succès!")
+exit(0)
