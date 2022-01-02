@@ -15,7 +15,7 @@ madataframe["payment"] = ""
 madataframe.loc[madataframe["label"].str.contains("VIR"), ["payment"]] = 4
 madataframe.loc[madataframe["label"].str.contains("CB"), ["payment"]] = 6
 madataframe.loc[madataframe["label"].str.contains("CARTE"), ["payment"]] = 6
-madataframe.loc[madataframe["label"].str.contains("PRLV SEPA"), ["payment"]] = 10
+madataframe.loc[madataframe["label"].str.contains("PRLV SEPA"), ["payment"]] = 11
 madataframe["info"] = madataframe["label"]
 madataframe = madataframe.drop(columns="dateVal")
 madataframe = madataframe.drop(columns="categoryParent")
