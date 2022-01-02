@@ -13,8 +13,8 @@ input_file = sys.argv[1]
 madataframe = pandas.read_csv(input_file, encoding="cp1252", delimiter=";")
 madataframe["payment"] = ""
 madataframe.loc[madataframe["label"].str.contains("VIR"), ["payment"]] = 4
-madataframe.loc[madataframe["label"].str.contains("CB"), ["payment"]] = 5
-madataframe.loc[madataframe["label"].str.contains("CARTE"), ["payment"]] = 5
+madataframe.loc[madataframe["label"].str.contains("CB"), ["payment"]] = 6
+madataframe.loc[madataframe["label"].str.contains("CARTE"), ["payment"]] = 6
 madataframe.loc[madataframe["label"].str.contains("PRLV SEPA"), ["payment"]] = 10
 madataframe["info"] = madataframe["label"]
 madataframe = madataframe.drop(columns="dateVal")
