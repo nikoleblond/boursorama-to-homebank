@@ -10,7 +10,12 @@ if not os.path.isfile(sys.argv[1]):
     exit(1)
 
 input_file = sys.argv[1]
-madataframe = pandas.read_csv(input_file, encoding="cp1252", delimiter=";")
+madataframe = pandas.read_csv(input_file, encoding="utf_8_sig", delimiter=";", encoding_errors='strict')
+if set(['dateOp','dateVal', 'label', 'category', 'categoryParent', 'amount', 'comment', 'accountNum', 'accountLabel', 'accountbalance']).issubset(madataframe.columns):
+    print("Ce fichier est valide")
+else:
+    print("Fichier CSV invalide")
+    exit(1)
 madataframe["payment"] = ""
 madataframe.loc[madataframe["label"].str.contains("VIR"), ["payment"]] = 4
 madataframe.loc[madataframe["label"].str.contains("CB"), ["payment"]] = 6
@@ -30,4 +35,3 @@ madataframe = madataframe[["date", "payment", "info", "payee", "memo", "amount",
 output_file = input_file + "_converted.csv"
 madataframe.to_csv(output_file, index=False, quoting=None, sep=";")
 print("Fichier converti avec succès!")
-exit(0)
